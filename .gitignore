@@ -1,0 +1,16 @@
+.ipynb_checkpoints/
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.jsonl
+.env/
+.venv/
+env/
+venv/
+*.csv
+*.gif
+test_total.ipynb
+test*.ipynb
+result_plot
