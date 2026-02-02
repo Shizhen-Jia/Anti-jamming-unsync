@@ -252,6 +252,7 @@ def solve_game_bestresp_Q0_then_Q1(
     multi_stream: bool = True, verbose: bool = True, track_hist: bool = True,
     Q1_init: np.ndarray | None = None,
     Q0_init: np.ndarray | None = None,
+    save_Q: bool = False,                     # save final Q0/Q1 into hist (requires track_hist)
 ):
     """
     Alternating scheme:
@@ -271,6 +272,8 @@ def solve_game_bestresp_Q0_then_Q1(
     Q0_prev = project_psd_trace(hermitian(Q0_init), P0, mode="le") if Q0_init is not None else None
     eta_var = float(eta_init if step_rule == "adp" else eta)
 
+    if save_Q and not track_hist:
+        raise ValueError("save_Q requires track_hist=True")
     hist = {'J': [], 'errQ0': [], 'errQ1': [], 'residual': [],
             'trQ0': [], 'trQ1': [], 'eta': []} if track_hist else None
 
@@ -371,5 +374,10 @@ def solve_game_bestresp_Q0_then_Q1(
             break
 
         Q0_prev = Q0
+
+    if track_hist and save_Q:
+        # Save final Q0/Q1 only to keep hist size reasonable.
+        hist['Q0'] = Q0
+        hist['Q1'] = Q1
 
     return (Q0, Q1, it, hist) if track_hist else (Q0, Q1, it)

@@ -560,6 +560,7 @@ def solve_game_bestresp_Q0_then_Q1(
     multi_stream=True, verbose=True, track_hist=True,
     Q1_init=None,                        # jammer init
     Q0_init=None,                         # desired init (optional)
+    save_Q=False,                         # save final Q0/Q1 into hist (requires track_hist)
     progress=None,            # callable: progress(i, total, metrics:dict, ctx:dict) -> bool(stop?)
     progress_every=1,         # 每多少步调用一次
     progress_ctx=None         # 传上下文信息：方法名/时刻/k/卫星名等
@@ -587,6 +588,8 @@ def solve_game_bestresp_Q0_then_Q1(
     else:
         eta_var = float(eta)
 
+    if save_Q and not track_hist:
+        raise ValueError("save_Q requires track_hist=True")
     hist = {'J': [], 'errQ0': [], 'errQ1': [], 'residual': [], 'trQ0': [], 'trQ1': [], 'eta': []} if track_hist else None
 
     # --- inner updaters (fixed-eta) ---
@@ -709,6 +712,11 @@ def solve_game_bestresp_Q0_then_Q1(
             break
 
         Q0_prev = Q0
+
+    if track_hist and save_Q:
+        # Save final Q0/Q1 only to keep hist size reasonable.
+        hist['Q0'] = Q0
+        hist['Q1'] = Q1
 
     return (Q0, Q1, it, hist) if track_hist else (Q0, Q1, it)
 
