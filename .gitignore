@@ -6,6 +6,7 @@ __pycache__/
 *.pyd
 allarray1km_timeseries_5min.jsonl
 allarray1km_timeseries_5min_old.jsonl
+doppler_a_tx_tau_tx.jsonl
 .env/
 .venv/
 env/

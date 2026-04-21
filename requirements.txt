@@ -17,7 +17,7 @@ skyfield>=1.49,<2
 # Sionna / RT stack for doppler_simu.ipynb
 # If you already manage a GPU-specific TensorFlow build separately,
 # install that first and then install the rest of this file.
-tensorflow>=2.15,<2.18
+# tensorflow>=2.15,<2.18
 sionna>=0.19,<1
 mitsuba>=3.5,<4
 drjit>=0.4,<1
