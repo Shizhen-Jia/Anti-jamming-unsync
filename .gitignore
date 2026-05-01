@@ -16,3 +16,4 @@ venv/
 test_total.ipynb
 test*.ipynb
 result_plot
+overleaf_paper/
